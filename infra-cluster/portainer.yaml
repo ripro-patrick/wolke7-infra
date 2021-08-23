@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: portainer
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wolke7-infra-portainer
+  namespace: argocd
+spec:
+  destination:
+    name: wolke7-infra
+    namespace: portainer
+  project: default
+  source:
+    path: portainer
+    repoURL: https://github.com/ripro-patrick/wolke7-helm-subcharts.git
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+      allowEmpty: true
