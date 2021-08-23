@@ -14,5 +14,10 @@ spec:
     namespace: crossplane-system
   project: default
   source:
-    chart: crossplane
+    path: crossplane
     repoURL: https://github.com/ripro-patrick/wolke7-helm-subcharts.git
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+      allowEmpty: true
