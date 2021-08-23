@@ -26,7 +26,9 @@ sleep ${TIMEOUT}
 DNS=$(civo k8s get ${CLUSTER} --region=${REGION} -o custom -f "DNSEntry")
 l "DNS: ${DNS}"
 
-. components/cert-manager.sh
+# required for rancher - disabled as rancher is not being installed
+#. components/cert-manager.sh
+
 . components/traefik.sh
 
 sleep ${TIMEOUT}
