@@ -17,7 +17,7 @@ if clusterAvailable; then
     l "--- cluster is already available..."
     civo k8s config ${CLUSTER} --region=${REGION} --save --merge --switch
 else
-    civo k8s create ${CLUSTER} --size=g3.k3s.medium --nodes=1 --region=${REGION} \
+    civo k8s create ${CLUSTER} --size=g3.k3s.medium --nodes=3 --region=${REGION} \
         --save --merge --switch --wait 
 fi
 
@@ -31,10 +31,10 @@ l "DNS: ${DNS}"
 
 . components/traefik.sh
 
-sleep ${TIMEOUT}
-# scale the cluster up
-l "--- scale up the cluster"
-civo k8s pool scale ${CLUSTER} $(civo k8s show ${CLUSTER} --region=${REGION} -o json | jq -r ".pools[0].id") -n 3 --region=${REGION}
+# sleep ${TIMEOUT}
+# # scale the cluster up
+# l "--- scale up the cluster"
+# civo k8s pool scale ${CLUSTER} $(civo k8s show ${CLUSTER} --region=${REGION} -o json | jq -r ".pools[0].id") -n 3 --region=${REGION}
 
 sleep ${TIMEOUT}
 
