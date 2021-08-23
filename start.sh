@@ -1,7 +1,7 @@
 #!/bin/bash
 . base.sh
 
-CLUSTER=wolke7-infra
+CLUSTER=${1:-"wolke7-infra"}
 
 # delete configs
 l "configure kubectl"

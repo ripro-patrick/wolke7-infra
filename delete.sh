@@ -1,6 +1,8 @@
 #!/bin/bash
 . base.sh
 
+CLUSTER=${1:-"wolke7-infra"}
+
 # switch context back to "infra"-cluster
 civo k8s config wolke7-infra --region=${REGION} --save --merge --switch
 
