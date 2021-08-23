@@ -26,13 +26,20 @@ sleep ${TIMEOUT}
 DNS=$(civo k8s get ${CLUSTER} --region=${REGION} -o custom -f "DNSEntry")
 l "DNS: ${DNS}"
 
+. components/cert-manager.sh
 . components/traefik.sh
 
 sleep ${TIMEOUT}
 # scale the cluster up
 l "--- scale up the cluster"
-civo k8s pool scale ${CLUSTER} $(civo k8s show ${CLUSTER} --region=${REGION} -o json | jq -r ".pools[0].id") -n 2 --region=${REGION}
+civo k8s pool scale ${CLUSTER} $(civo k8s show ${CLUSTER} --region=${REGION} -o json | jq -r ".pools[0].id") -n 3 --region=${REGION}
+
+sleep ${TIMEOUT}
 
 . components/argocd.sh
 
+argocd app create ${CLUSTER}-infra \
+    --repo https://github.com/ripro-patrick/wolke7-infra.git --path infra-cluster \
+    --dest-name ${CLUSTER} --dest-namespace default \
+    --upsert
 
