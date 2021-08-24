@@ -26,6 +26,8 @@ sleep ${TIMEOUT}
 DNS=$(civo k8s get ${CLUSTER} --region=${REGION} -o custom -f "DNSEntry")
 l "DNS: ${DNS}"
 
+kubectl create cm ${CLUSTER}-cluster-vars --from-literal=DNS=${DNS} --from-literal=REGION=${REGION} --from-literal=CLUSTER=${CLUSTER}
+
 # required for rancher - disabled as rancher is not being installed
 #. components/cert-manager.sh
 
@@ -43,5 +45,6 @@ sleep ${TIMEOUT}
 argocd app create ${CLUSTER}-infra \
     --repo https://github.com/ripro-patrick/wolke7-infra.git --path infra-cluster \
     --dest-name ${CLUSTER} --dest-namespace default \
+    --sync-policy=auto --self-heal --sync-option Prune=true --allow-empty \
     --upsert
 

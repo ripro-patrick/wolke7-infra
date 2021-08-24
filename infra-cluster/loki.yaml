@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: loki
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wolke7-infra-loki
+  namespace: argocd
+spec:
+  destination:
+    name: wolke7-infra
+    namespace: loki
+  project: default
+  source:
+    path: loki
+    repoURL: https://github.com/ripro-patrick/wolke7-helm-subcharts.git
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+      allowEmpty: true
