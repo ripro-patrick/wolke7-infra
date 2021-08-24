@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: infra-clusters
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wolke7-infra-clusters
+  namespace: infra-clusters
+spec:
+  destination:
+    name: wolke7-infra
+    namespace: infra-clusters
+  project: default
+  source:
+    path: clusters
+    repoURL: https://github.com/ripro-patrick/wolke7-infra.git 
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+      allowEmpty: true
