@@ -7,7 +7,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: wolke7-infra-clusters
-  namespace: infra-clusters
+  namespace: argocd
 spec:
   destination:
     name: wolke7-infra
