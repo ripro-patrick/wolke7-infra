@@ -26,7 +26,7 @@ sleep ${TIMEOUT}
 DNS=$(civo k8s get ${CLUSTER} --region=${REGION} -o custom -f "DNSEntry")
 l "DNS: ${DNS}"
 
-kubectl create cm ${CLUSTER}-cluster-vars --from-literal=DNS=${DNS} --from-literal=REGION=${REGION} --from-literal=CLUSTER=${CLUSTER}
+kubectl create cm cluster-vars --from-literal=DNS=${DNS} --from-literal=REGION=${REGION} --from-literal=CLUSTER=${CLUSTER}
 
 # required for rancher - disabled as rancher is not being installed
 #. components/cert-manager.sh

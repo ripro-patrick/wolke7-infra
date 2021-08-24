@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: wolke7-nocode
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wolke7-nocode-cluster
+  namespace: wolke7-nocode
+spec:
+  destination:
+    name: wolke7-nocode-cluster
+    namespace: wolke7-nocode
+  project: default
+  source:
+    path: infra
+    repoURL: https://github.com/ripro-patrick/wolke7-nocode.git
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+      allowEmpty: true
