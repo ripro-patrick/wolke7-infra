@@ -10,7 +10,7 @@ metadata:
   namespace: argocd
 spec:
   destination:
-    name: wolke7-nocode-cluster
+    name: wolke7-infra
     namespace: argocd
   project: default
   source:
