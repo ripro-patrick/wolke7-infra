@@ -61,5 +61,9 @@ curl -s https://raw.githubusercontent.com/crossplane-contrib/provider-civo/main/
 AWS_PROFILE=ripro && echo -e "[default]\naws_access_key_id = $(aws configure get aws_access_key_id --profile $AWS_PROFILE)\naws_secret_access_key = $(aws configure get aws_secret_access_key --profile $AWS_PROFILE)" > creds.conf
 kubectl create secret generic aws-creds -n crossplane-system --from-file=creds=./creds.conf
 
+# verifyCRDProvider() { kubectl get ProviderConfig >/dev/null 2>&1; return $?; }
+# retry "CRD Provider available" "verifyCRDProvider"
+# l "--- CRD Provider is available"
+# kubectl apply -f https://raw.githubusercontent.com/crossplane/crossplane/release-1.3/docs/snippets/configure/aws/providerconfig.yaml
 
 
