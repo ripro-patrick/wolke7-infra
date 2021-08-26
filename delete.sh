@@ -7,11 +7,11 @@ CLUSTER=${1:-"wolke7-infra"}
 civo k8s config wolke7-infra --region=${REGION} --save --merge --switch
 
 # delete clusters
-for i in $(civo k8s ls --region=${REGION} -o custom -f name | grep -v wolke7-infra); do
+for i in $(civo k8s ls --region=${REGION} -o custom -f name | grep -v wolke7-infra | grep wolke7); do
     kubectl config delete-context ${i} 2>/dev/null
     kubectl config delete-cluster ${i} 2>/dev/null
     kubectl config delete-user ${i} 2>/dev/null
-    sed "s,CLUSTER,${i},g" cluster/cluster.yaml | kubectl delete -f -
+    civo k8s remove ${i} --region=${REGION}
 done
 
 # remove kubectl configs
