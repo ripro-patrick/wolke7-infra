@@ -21,3 +21,35 @@ spec:
       selfHeal: true
       prune: true
       allowEmpty: true
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  name: deploy-argocd-cluster-config
+  namespace: argocd
+spec:
+  template:
+    metadata:
+      creationTimestamp: null
+    spec:
+      containers:
+      - image: quay.io/argoproj/argocd:v2.0.4
+        name: deploy-argocd-cluster-config
+        command: ["/bin/sh"]
+        args: ["-c", "argocd login http://argocd-server --insecure --username=admin --password=$(cat /tmp/argocd-initial-admin-secret/password) --grpc-web  ; argocd cluster add --grpc-web wolke7-nocode --kubeconfig /tmp/cluster-details-wolke7-nocode/kubeconfig"]
+        volumeMounts:
+        - name: cluster-details-wolke7-nocode
+          mountPath: "/tmp/cluster-details-wolke7-nocode"
+          readOnly: true
+        - name: argocd-initial-admin-secret 
+          mountPath: "/tmp/argocd-initial-admin-secret"
+          readOnly: true
+      restartPolicy: OnFailure
+      volumes:
+      - name: cluster-details-wolke7-nocode
+        secret:
+          secretName: cluster-details-wolke7-nocode
+      - name: argocd-initial-admin-secret 
+        secret:
+          secretName: argocd-initial-admin-secret 

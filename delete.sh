@@ -11,7 +11,7 @@ for i in $(civo k8s ls --region=${REGION} -o custom -f name | grep -v wolke7-inf
     kubectl config delete-context ${i} 2>/dev/null
     kubectl config delete-cluster ${i} 2>/dev/null
     kubectl config delete-user ${i} 2>/dev/null
-    civo k8s remove ${i} --region=${REGION}
+    civo k8s remove ${i} --yes --region=${REGION}
 done
 
 # remove kubectl configs
