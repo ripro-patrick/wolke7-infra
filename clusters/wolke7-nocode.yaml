@@ -37,8 +37,8 @@ spec:
       - image: quay.io/argoproj/argocd:v2.0.4
         name: deploy-argocd-cluster-config
         command: ["/bin/sh"]
-        # args: ["-c", "argocd login http://argocd-server --insecure --username=admin --password=$(cat /tmp/argocd-initial-admin-secret/password) --grpc-web  ; argocd cluster add --grpc-web wolke7-nocode --kubeconfig /tmp/cluster-details-wolke7-nocode/kubeconfig"]
-        args: ["-c", "sleep 100000"]
+        # args: ["-c", "sleep 100000"]
+        args: ["-c", "argocd login argocd-server --insecure --username=admin --password=$(cat /tmp/argocd-initial-admin-secret/password) --grpc-web --plaintext ; argocd cluster add --grpc-web wolke7-nocode --kubeconfig /tmp/cluster-details-wolke7-nocode/kubeconfig"]
         volumeMounts:
         - name: cluster-details-wolke7-nocode
           mountPath: "/tmp/cluster-details-wolke7-nocode"
