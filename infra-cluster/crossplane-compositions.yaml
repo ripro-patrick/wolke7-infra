@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: wolke7-infra-crossplane
+  name: wolke7-infra-crossplane-compositions
   namespace: crossplane-system
 spec:
   destination:
