@@ -38,7 +38,7 @@ spec:
         name: deploy-argocd-cluster-config
         command: ["/bin/sh"]
         # args: ["-c", "argocd login http://argocd-server --insecure --username=admin --password=$(cat /tmp/argocd-initial-admin-secret/password) --grpc-web  ; argocd cluster add --grpc-web wolke7-nocode --kubeconfig /tmp/cluster-details-wolke7-nocode/kubeconfig"]
-        args: ["-c", "cat"]
+        args: ["-c", "sleep 100000"]
         volumeMounts:
         - name: cluster-details-wolke7-nocode
           mountPath: "/tmp/cluster-details-wolke7-nocode"
