@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wolke7-infra-crossplane
+  namespace: crossplane-system
+spec:
+  destination:
+    name: wolke7-infra
+    namespace: crossplane-system
+  project: default
+  source:
+    path: crossplane-compositions
+    repoURL: https://github.com/ripro-patrick/wolke7-infra.git
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+      allowEmpty: true
+    syncOptions:
+      - CreateNamespace=true
+      
