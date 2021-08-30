@@ -42,3 +42,75 @@ spec:
             small: g3.k3s.small
             medium: g3.k3s.medium
             large: g3.k3s.xlarge
+  - name: civoclusterConfig
+    base: 
+      apiVersion: batch/v1
+      kind: Job
+      metadata:
+        creationTimestamp: null
+        name: deploy-argocd-cluster-config
+        namespace: argocd
+      spec:
+        template:
+          metadata:
+            creationTimestamp: null
+          spec:
+            containers:
+            - image: quay.io/argoproj/argocd:v2.0.4
+              name: deploy-argocd-cluster-config
+              command: ["/bin/sh"]
+              # args: ["-c", "sleep 100000"]
+              args: ["-c", "argocd login argocd-server --insecure --username=admin --password=$(cat /tmp/argocd-initial-admin-secret/password) --grpc-web --plaintext ; argocd cluster add --grpc-web wolke7-nocode --kubeconfig /tmp/cluster-details/kubeconfig"]
+              volumeMounts:
+              - name: cluster-details-wolke7
+                mountPath: "/tmp/cluster-details"
+                readOnly: true
+              - name: argocd-initial-admin-secret 
+                mountPath: "/tmp/argocd-initial-admin-secret"
+                readOnly: true
+            restartPolicy: OnFailure
+            volumes:
+            - name: cluster-details-wolke7
+              secret:
+                secretName: cluster-details-wolke7-nocode
+            - name: argocd-initial-admin-secret 
+              secret:
+                secretName: argocd-initial-admin-secret 
+      patches:
+      - type: FromCompositeFieldPaths
+        fromFieldPath: spec.id
+        toFieldPath: metadata.name
+      - type: FromCompositeFieldPaths
+        fromFieldPaths: 
+        - spec.id
+        toFieldPath: spec.containers.name
+        transforms:
+        - type: String
+          fmt: "cluster-details-%s"
+      - type: FromCompositeFieldPaths
+        fromFieldPaths: 
+        - spec.id
+        toFieldPath: spec.volumes["cluster-details-wolke7"].secrets.name
+        transforms:
+        - type: String
+          fmt: "cluster-details-%s"
+    # - name: civoclusterArgocd
+    # base:
+    #   apiVersion: cluster.civo.crossplane.io/v1alpha1
+    #   kind: Application
+    #   spec:
+    #     destination:
+    #       name: wolke7-infra
+    #       namespace: prometheus
+    #     project: default
+    #     source:
+    #       path: grafana
+    #       repoURL: https://github.com/ripro-patrick/wolke7-helm-subcharts.git
+    #     syncPolicy:
+    #       automated:
+    #         selfHeal: true
+    #         prune: true
+    #         allowEmpty: true
+    #   patches:
+    #   - fromFieldPath: spec.id
+    #   toFieldPath: metadata.name
