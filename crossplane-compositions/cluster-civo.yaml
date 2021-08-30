@@ -77,18 +77,15 @@ spec:
               secret:
                 secretName: argocd-initial-admin-secret 
       patches:
-      - type: FromCompositeFieldPaths
-        fromFieldPath: spec.id
+      - fromFieldPath: spec.id
         toFieldPath: metadata.name
-      - type: FromCompositeFieldPaths
-        fromFieldPaths: 
+      - fromFieldPaths: 
         - spec.id
         toFieldPath: spec.containers.name
         transforms:
         - type: String
           fmt: "cluster-details-%s"
-      - type: FromCompositeFieldPaths
-        fromFieldPaths: 
+      - fromFieldPaths: 
         - spec.id
         toFieldPath: spec.volumes["cluster-details-wolke7"].secrets.name
         transforms:
