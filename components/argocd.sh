@@ -40,4 +40,11 @@ l "--- argocd is started"
 
 argocd cluster add ${CLUSTER}
 
-
+# store ArgoCD access details in secre
+# for portainer
+kubectl create ns portainer
+kubectl create secret generic -n portainer portainer-password \
+  --from-literal=password="${ARGO_PW}"
+# and for grafana
+kubectl create secret generic -n prometheus grafana-password \
+  --from-literal=password="${ARGO_PW}"
