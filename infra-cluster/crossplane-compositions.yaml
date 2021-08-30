@@ -2,11 +2,11 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: wolke7-infra-crossplane-compositions
-  namespace: crossplane-system
+  namespace: argocd
 spec:
   destination:
     name: wolke7-infra
-    namespace: crossplane-system
+    namespace: argocd
   project: default
   source:
     path: crossplane-compositions

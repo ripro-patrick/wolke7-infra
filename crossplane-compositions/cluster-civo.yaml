@@ -20,11 +20,11 @@ spec:
       apiVersion: cluster.civo.crossplane.io/v1alpha1
       kind: CivoKubernetes
       spec:
-        instances: 1
+        instances: 2
         size: g3.k3s.small
         connectionDetails:
-          connectionSecretNamePrefix: cluster-civo
-          connectionSecretNamespace: crossplane-system
+          connectionSecretNamePrefix: "cluster-details"
+          connectionSecretNamespace: "argocd"
         providerConfigRef:
           name: provider-civo
     patches:
