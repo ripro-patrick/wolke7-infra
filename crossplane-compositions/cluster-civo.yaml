@@ -58,6 +58,7 @@ spec:
         template:
           metadata:
             creationTimestamp: null
+            namespace: argocd
           spec:
             containers:
             - image: quay.io/argoproj/argocd:v2.0.4
