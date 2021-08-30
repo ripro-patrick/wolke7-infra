@@ -28,16 +28,16 @@ spec:
         providerConfigRef:
           name: civo-provider
     patches:
-    - type: FromCompositeFieldPaths
+    - type: FromCompositeFieldPath
       fromFieldPath: spec.id
       toFieldPath: metadata.name
-    - type: FromCompositeFieldPaths
+    - type: FromCompositeFieldPath
       fromFieldPath: spec.id
       toFieldPath: spec.name
-    - type: FromCompositeFieldPaths
+    - type: FromCompositeFieldPath
       fromFieldPath: spec.parameters.minNodeCount
       toFieldPath: spec.instanced
-    - type: FromCompositeFieldPaths
+    - type: FromCompositeFieldPath
       fromFieldPath: spec.parameters.nodeSize
       toFieldPath: spec.size
       transforms:
@@ -81,17 +81,17 @@ spec:
               secret:
                 secretName: argocd-initial-admin-secret 
       patches:
-      - type: FromCompositeFieldPaths
+      - type: FromCompositeFieldPath
         fromFieldPath: spec.id
         toFieldPath: metadata.name
-      - type: FromCompositeFieldPaths
+      - type: FromCompositeFieldPath
         fromFieldPaths: 
         - spec.id
         toFieldPath: spec.containers.name
         transforms:
         - type: String
           fmt: "cluster-details-%s"
-      - type: FromCompositeFieldPaths
+      - type: FromCompositeFieldPath
         fromFieldPaths: 
         - spec.id
         toFieldPath: spec.volumes["cluster-details-wolke7"].secrets.name
