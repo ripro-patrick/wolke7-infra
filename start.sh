@@ -42,6 +42,8 @@ sleep ${TIMEOUT}
 
 . components/argocd.sh
 
+sleep ${TIMEOUT}
+
 argocd app create ${CLUSTER}-infra \
     --repo https://github.com/ripro-patrick/wolke7-infra.git --path infra-cluster \
     --dest-name ${CLUSTER} --dest-namespace default \
