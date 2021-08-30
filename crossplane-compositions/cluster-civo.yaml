@@ -52,7 +52,7 @@ spec:
       kind: Job
       metadata:
         creationTimestamp: null
-        name: deploy-argocd-cluster-config
+        name: deploy-argocd-cluster-config2
         namespace: argocd
       spec:
         template:
