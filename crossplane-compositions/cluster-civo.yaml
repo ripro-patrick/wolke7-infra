@@ -26,7 +26,7 @@ spec:
           connectionSecretNamePrefix: "cluster-details"
           connectionSecretNamespace: "argocd"
         providerConfigRef:
-          name: provider-civo
+          name: civo-provider
     patches:
     - fromFieldPath: spec.id
       toFieldPath: metadata.name
