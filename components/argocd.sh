@@ -46,5 +46,6 @@ kubectl create ns portainer
 kubectl create secret generic -n portainer portainer-password \
   --from-literal=password="${ARGO_PW}"
 # and for grafana
+kubectl create ns prometheus
 kubectl create secret generic -n prometheus grafana-password \
   --from-literal=password="${ARGO_PW}"
